@@ -42,11 +42,11 @@ function button_reset () {
     b = 0
     AB = 0
 }
-function send_message () {
-    radio.sendString("sender" + "-" + "burkerude" + "-" + "this_is_a_test" + "-" + "123")
+function send_message (message: string, recipient: string) {
+    radio.sendValue(recipient, randint(0, 10))
 }
 input.onButtonPressed(Button.A, function () {
-    send_message()
+    send_message("abc", "abc")
     button_reset()
 })
 function Home () {
@@ -142,39 +142,7 @@ input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
 radio.onReceivedString(function (receivedString) {
-    let uids_messages: string[] = []
-    let current_message: string[] = []
-    incoming_message = receivedString
-    current_message.push(incoming_message.split("-")[1])
-    current_message.push(incoming_message.split("-")[2])
-    for (let value of current_message) {
-        basic.showString("" + (value))
-    }
-    basic.showLeds(`
-        # . . . .
-        . # . # .
-        . . # . .
-        . # . # .
-        . . . . #
-        `)
-    basic.clearScreen()
-    for (let value of uids_messages) {
-        if (value == current_message[6]) {
-            uid_match = true
-            break;
-        }
-    }
-    if (uid_match == true) {
-        uids_messages.push(current_message[6])
-    } else {
-        if (current_message[1] == username) {
-            let inbox: string[] = []
-            inbox.push("" + current_message[4] + "-" + current_message[0])
-            basic.showString("" + (inbox[0]))
-        } else {
-            radio.sendString(incoming_message)
-        }
-    }
+	
 })
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
@@ -190,6 +158,9 @@ function messages () {
 }
 input.onButtonPressed(Button.B, function () {
     b = 1
+})
+radio.onReceivedValue(function (name, value) {
+	
 })
 function Menu () {
     let menu = 0
@@ -240,8 +211,6 @@ let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
 let menu_place = 0
-let uid_match = false
-let incoming_message = ""
 let current_draft = 0
 let text_entered = 0
 let working_text = ""
