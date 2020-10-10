@@ -99,7 +99,7 @@ function Menu () {
 }
 function text_input () {
     Text_input = 1
-    alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ^"
+    alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     visable_charactor = 0
     while (AB == 0) {
         if (input.buttonIsPressed(Button.A)) {
@@ -107,9 +107,19 @@ function text_input () {
         } else if (input.buttonIsPressed(Button.B)) {
             visable_charactor += -1
         }
-        basic.showString("this".charAt(0))
+        basic.showString(alphabet2.charAt(visable_charactor))
+    }
+    AB = 0
+    if (alphabet2.charAt(visable_charactor) == "#") {
+        text_entered = 1
+    } else {
+        working_text = "" + working_text + alphabet2.charAt(visable_charactor)
+        basic.clearScreen()
+        basic.showString("" + (working_text))
     }
 }
+let working_text = ""
+let text_entered = 0
 let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
@@ -122,4 +132,4 @@ let username = ""
 username = "burkerude"
 let page = 1
 let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_", "^"]
-Home()
+text_input()
