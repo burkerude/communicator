@@ -1,3 +1,6 @@
+input.onButtonPressed(Button.A, function () {
+    a = 1
+})
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS", "ABOUT"]
     Menu()
@@ -33,7 +36,7 @@ function settings () {
         while (0 == 0) {
         	
         }
-        username = 0
+        username = ""
         settings()
     } else if (menu_selection == 3) {
         messages()
@@ -75,6 +78,9 @@ function messages () {
         settings()
     }
 }
+input.onButtonPressed(Button.B, function () {
+    b = 1
+})
 function Menu () {
     menu_selection = 100
     menu_place = 0
@@ -98,38 +104,59 @@ function Menu () {
     }
 }
 function text_input () {
+    text_entered = 0
     Text_input = 1
     alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     visable_charactor = 0
-    while (AB == 0) {
-        if (input.buttonIsPressed(Button.A)) {
-            visable_charactor += 1
-        } else if (input.buttonIsPressed(Button.B)) {
-            visable_charactor += -1
+    while (text_entered == 0) {
+        while (AB == 0) {
+            if (b == 1) {
+                visable_charactor += 1
+                b = 0
+            } else if (a == 1) {
+                visable_charactor += -1
+                a = 0
+            }
+            basic.showString(alphabet2.charAt(visable_charactor))
         }
-        basic.showString(alphabet2.charAt(visable_charactor))
-    }
-    AB = 0
-    if (alphabet2.charAt(visable_charactor) == "#") {
-        text_entered = 1
-    } else {
-        working_text = "" + working_text + alphabet2.charAt(visable_charactor)
-        basic.clearScreen()
-        basic.showString("" + (working_text))
+        AB = 0
+        if (alphabet2.charAt(visable_charactor) == "#") {
+            text_entered = 1
+        } else {
+            working_text = "" + working_text + alphabet2.charAt(visable_charactor)
+            basic.clearScreen()
+            basic.showString("" + (working_text))
+        }
     }
 }
 let working_text = ""
-let text_entered = 0
 let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
+let text_entered = 0
 let menu_place = 0
+let b = 0
 let AB = 0
 let _break = 0
 let menu_selection = 0
 let current_menu: string[] = []
+let a = 0
 let username = ""
 username = "burkerude"
 let page = 1
-let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_", "^"]
 text_input()
+basic.forever(function () {
+    if (text_entered == 1) {
+        text_entered = 0
+        basic.showLeds(`
+            # . . . .
+            . # . # .
+            . . # . .
+            . # . # .
+            . . . . #
+            `)
+        basic.pause(100)
+        basic.clearScreen()
+        basic.showString("" + (working_text))
+    }
+})
