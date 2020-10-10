@@ -27,19 +27,15 @@ function settings () {
     	
     } else if (menu_selection == 2) {
         basic.showString("" + (username))
-        while (!(input.buttonIsPressed(Button.A))) {
-            if (input.buttonIsPressed(Button.B)) {
-                settings()
+        while (true) {
+            if (a == 1) {
+            	
+            } else if (b == 1) {
+            	
             }
         }
-        text_input()
-        while (0 == 0) {
-        	
-        }
-        username = ""
-        settings()
     } else if (menu_selection == 3) {
-        messages()
+        Home()
     }
 }
 function Drafts () {
@@ -65,7 +61,7 @@ input.onButtonPressed(Button.AB, function () {
     }
 })
 function messages () {
-    current_menu = ["MESSAGES", "DRAFTS", "SETTINGS"]
+    current_menu = ["MESSAGES", "DRAFTS"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -74,8 +70,6 @@ function messages () {
     	
     } else if (menu_selection == 1) {
         Drafts()
-    } else if (menu_selection == 2) {
-        settings()
     }
 }
 input.onButtonPressed(Button.B, function () {
@@ -135,9 +129,9 @@ let alphabet2 = ""
 let Text_input = 0
 let text_entered = 0
 let menu_place = 0
-let b = 0
 let AB = 0
 let _break = 0
+let b = 0
 let menu_selection = 0
 let current_menu: string[] = []
 let a = 0
