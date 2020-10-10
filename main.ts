@@ -43,10 +43,23 @@ function button_reset () {
     AB = 0
 }
 function send_message (message: string, recipient: string) {
-    radio.sendValue(recipient, randint(0, 10))
+    radio_in = ""
+    working_group = randint(1, 255)
+    radio.sendValue(recipient, working_group)
+    radio.setGroup(working_group)
+    loading = true
+    for (let index = 0; index <= 9; index++) {
+        if (radio_in == recipient) {
+            radio.sendString(message)
+            loading = false
+        } else if (index == 9) {
+            break;
+        }
+        basic.pause(100)
+    }
 }
 input.onButtonPressed(Button.A, function () {
-    send_message("abc", "abc")
+    send_message("abc", "burkerude")
     button_reset()
 })
 function Home () {
@@ -142,7 +155,7 @@ input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
 radio.onReceivedString(function (receivedString) {
-	
+    radio_in = receivedString
 })
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
@@ -184,7 +197,7 @@ function Menu () {
 function text_input () {
     text_entered = 0
     Text_input = 1
-    alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+    alphabet = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
     visable_charactor = 0
     while (text_entered == 0) {
         while (AB == 0) {
@@ -195,20 +208,20 @@ function text_input () {
                 visable_charactor += -1
                 button_reset()
             }
-            basic.showString(alphabet2.charAt(visable_charactor))
+            basic.showString(alphabet.charAt(visable_charactor))
         }
         button_reset()
-        if (alphabet2.charAt(visable_charactor) == "#") {
+        if (alphabet.charAt(visable_charactor) == "#") {
             text_entered = 1
         } else {
-            working_text = "" + working_text + alphabet2.charAt(visable_charactor)
+            working_text = "" + working_text + alphabet.charAt(visable_charactor)
             basic.clearScreen()
             basic.showString(working_text)
         }
     }
 }
 let visable_charactor = 0
-let alphabet2 = ""
+let alphabet = ""
 let Text_input = 0
 let menu_place = 0
 let current_draft = 0
@@ -216,6 +229,9 @@ let text_entered = 0
 let working_text = ""
 let menu_selection = 0
 let current_menu: string[] = []
+let loading = false
+let working_group = 0
+let radio_in = ""
 let AB = 0
 let b = 0
 let a = 0
