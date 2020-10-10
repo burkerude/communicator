@@ -43,7 +43,7 @@ function button_reset () {
     AB = 0
 }
 function send_message () {
-	
+    radio.sendString("sender" + "-" + "burkerude" + "-" + "this_is_a_test" + "-" + "123")
 }
 input.onButtonPressed(Button.A, function () {
     send_message()
@@ -145,22 +145,32 @@ radio.onReceivedString(function (receivedString) {
     let uids_messages: string[] = []
     let current_message: string[] = []
     incoming_message = receivedString
-    for (let index = 0; index <= 3; index++) {
-        current_message.push(incoming_message.split("-")[index])
+    current_message.push(incoming_message.split("-")[1])
+    current_message.push(incoming_message.split("-")[2])
+    for (let value of current_message) {
+        basic.showString("" + (value))
     }
+    basic.showLeds(`
+        # . . . .
+        . # . # .
+        . . # . .
+        . # . # .
+        . . . . #
+        `)
+    basic.clearScreen()
     for (let value of uids_messages) {
-        if (value == current_message[3]) {
+        if (value == current_message[6]) {
             uid_match = true
             break;
         }
     }
-    if (uid_match == false) {
-        uids_messages.push(current_message[3])
+    if (uid_match == true) {
+        uids_messages.push(current_message[6])
     } else {
         if (current_message[1] == username) {
             let inbox: string[] = []
-            inbox.push("" + current_message[2] + "-" + current_message[0])
-            basic.showString("" + (inbox))
+            inbox.push("" + current_message[4] + "-" + current_message[0])
+            basic.showString("" + (inbox[0]))
         } else {
             radio.sendString(incoming_message)
         }
