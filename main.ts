@@ -29,9 +29,18 @@ function settings () {
         basic.showString("" + (username))
         while (true) {
             if (a == 1) {
-            	
+                working_text = ""
+                text_input()
+                while (text_entered == 0) {
+                	
+                }
+                text_entered = 0
+                username = working_text
+                settings()
+                break;
             } else if (b == 1) {
-            	
+                settings()
+                break;
             }
         }
     } else if (menu_selection == 3) {
@@ -123,22 +132,21 @@ function text_input () {
         }
     }
 }
-let working_text = ""
 let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
-let text_entered = 0
 let menu_place = 0
 let AB = 0
 let _break = 0
+let text_entered = 0
+let working_text = ""
 let b = 0
 let menu_selection = 0
 let current_menu: string[] = []
 let a = 0
 let username = ""
 username = "burkerude"
-let page = 1
-text_input()
+Home()
 basic.forever(function () {
     if (text_entered == 1) {
         text_entered = 0
