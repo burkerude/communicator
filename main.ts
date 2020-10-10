@@ -1,3 +1,6 @@
+enum RadioMessage {
+    message1 = 49434
+}
 function check () {
     load_speed = 25
     led.plot(0, 0)
@@ -39,8 +42,12 @@ function button_reset () {
     b = 0
     AB = 0
 }
+function send_message () {
+	
+}
 input.onButtonPressed(Button.A, function () {
-    a = 1
+    send_message()
+    button_reset()
 })
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS"]
@@ -67,7 +74,7 @@ function settings () {
     } else if (menu_selection == 1) {
     	
     } else if (menu_selection == 2) {
-        basic.showString("" + (username))
+        basic.showString(username)
         while (true) {
             if (a == 1) {
                 working_text = ""
@@ -114,6 +121,7 @@ function Drafts () {
         text_entered = 0
         drafts_content[current_draft] = working_text
         check()
+        basic.showString("" + (drafts_content[current_draft]))
         Drafts()
     } else if (menu_selection == 2) {
         let drafts_recipients: string[] = []
@@ -133,6 +141,9 @@ function Drafts () {
 input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
+radio.onReceivedString(function (receivedString) {
+	
+})
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
     Menu()
@@ -146,7 +157,25 @@ function messages () {
     }
 }
 input.onButtonPressed(Button.B, function () {
-    b = 1
+    let uids_messages: string[] = []
+    let current_message: string[] = []
+    incoming_message = "sender" + "-" + "recipient" + "-" + "this_is_a_test" + "-" + "uid"
+    for (let index = 0; index <= 3; index++) {
+        current_message.push(incoming_message.split("-")[index])
+    }
+    for (let value of uids_messages) {
+        if (value == current_message[3]) {
+            uid_match = true
+            break;
+        }
+    }
+    if (uid_match == false) {
+        uids_messages.push(current_message[3])
+    } else {
+        if (current_message[1] == username) {
+        	
+        }
+    }
 })
 function Menu () {
     let menu = 0
@@ -170,7 +199,7 @@ function Menu () {
 function text_input () {
     text_entered = 0
     Text_input = 1
-    alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    alphabet2 = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
     visable_charactor = 0
     while (text_entered == 0) {
         while (AB == 0) {
@@ -189,7 +218,7 @@ function text_input () {
         } else {
             working_text = "" + working_text + alphabet2.charAt(visable_charactor)
             basic.clearScreen()
-            basic.showString("" + (working_text))
+            basic.showString(working_text)
         }
     }
 }
@@ -197,6 +226,8 @@ let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
 let menu_place = 0
+let uid_match = false
+let incoming_message = ""
 let current_draft = 0
 let text_entered = 0
 let working_text = ""
@@ -209,4 +240,3 @@ let load_speed = 0
 let username = ""
 username = "burkerude"
 check()
-Home()
