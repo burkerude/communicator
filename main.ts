@@ -1,3 +1,8 @@
+function button_reset () {
+    a = 0
+    b = 0
+    AB = 0
+}
 input.onButtonPressed(Button.A, function () {
     a = 1
 })
@@ -11,7 +16,7 @@ function Home () {
         messages()
     } else if (menu_selection == 1) {
         settings()
-    } else if (menu_selection == 2) {
+    } else {
         basic.showString("micrOS is a lightweight operating system for the microbit made by Burke Rudelsheim.")
     }
 }
@@ -85,23 +90,7 @@ function Drafts () {
     }
 }
 input.onButtonPressed(Button.AB, function () {
-    basic.pause(100)
-    if (input.buttonIsPressed(Button.AB)) {
-        for (let index = 0; index <= 3; index++) {
-            basic.showNumber(index)
-            if (!(input.buttonIsPressed(Button.AB))) {
-                break;
-            }
-            basic.pause(100)
-            if (index == 3) {
-                _break = 1
-                basic.pause(10)
-                Home()
-            }
-        }
-    } else {
-        AB = 1
-    }
+    AB = 1
 })
 function messages () {
     current_menu = ["MESSAGES", "DRAFTS"]
@@ -119,25 +108,22 @@ input.onButtonPressed(Button.B, function () {
     b = 1
 })
 function Menu () {
+    let menu = 0
     menu_selection = 100
     menu_place = 0
-    for (let value of current_menu) {
-        basic.showString("" + (value))
-        while (!(input.buttonIsPressed(Button.B))) {
-            if (input.buttonIsPressed(Button.A)) {
-                menu_selection = menu_place
-                _break = 1
-                break;
-            }
-        }
-        menu_place += 1
-        if (current_menu.length == menu_place) {
-            Menu()
-        }
-        if (_break == 1) {
-            _break = 0
+    while (menu == 0) {
+        if (a == 1) {
+            menu_place += -1
+            button_reset()
+        } else if (b == 1) {
+            menu_place += 1
+            button_reset()
+        } else if (AB == 1) {
+            menu_selection = menu_place
+            button_reset()
             break;
         }
+        basic.showString("" + (current_menu[menu_place]))
     }
 }
 function text_input () {
@@ -149,14 +135,14 @@ function text_input () {
         while (AB == 0) {
             if (b == 1) {
                 visable_charactor += 1
-                b = 0
+                button_reset()
             } else if (a == 1) {
                 visable_charactor += -1
-                a = 0
+                button_reset()
             }
             basic.showString(alphabet2.charAt(visable_charactor))
         }
-        AB = 0
+        button_reset()
         if (alphabet2.charAt(visable_charactor) == "#") {
             text_entered = 1
         } else {
@@ -170,30 +156,14 @@ let visable_charactor = 0
 let alphabet2 = ""
 let Text_input = 0
 let menu_place = 0
-let AB = 0
-let _break = 0
 let current_draft = 0
 let text_entered = 0
 let working_text = ""
-let b = 0
 let menu_selection = 0
 let current_menu: string[] = []
+let AB = 0
+let b = 0
 let a = 0
 let username = ""
 username = "burkerude"
 Home()
-basic.forever(function () {
-    if (text_entered == 1) {
-        text_entered = 0
-        basic.showLeds(`
-            # . . . .
-            . # . # .
-            . . # . .
-            . # . # .
-            . . . . #
-            `)
-        basic.pause(100)
-        basic.clearScreen()
-        basic.showString("" + (working_text))
-    }
-})
