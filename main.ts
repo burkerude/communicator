@@ -16,7 +16,7 @@ function Home () {
     }
 }
 function settings () {
-    current_menu = ["SCREEN BRIGHTNESS", "CHANNEL", "USERNAME", "^"]
+    current_menu = ["null", "null2", "USERNAME", "^"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -48,7 +48,41 @@ function settings () {
     }
 }
 function Drafts () {
-	
+    let drafts_content: string[] = []
+    current_menu = ["0", "1", "2", "3", "4"]
+    Menu()
+    while (menu_selection == 100) {
+        basic.pause(25)
+    }
+    current_draft = menu_selection
+    current_menu = ["read", "write", "to:", "send"]
+    Menu()
+    while (menu_selection == 100) {
+        basic.pause(25)
+    }
+    if (menu_selection == 0) {
+        basic.showString("" + (drafts_content[current_draft]))
+        Drafts()
+    } else if (menu_selection == 1) {
+        working_text = ""
+        text_input()
+        while (text_entered == 0) {
+        	
+        }
+        text_entered = 0
+        drafts_content[current_draft] = working_text
+    } else if (menu_selection == 2) {
+        let drafts_recipients: string[] = []
+        working_text = ""
+        text_input()
+        while (text_entered == 0) {
+        	
+        }
+        text_entered = 0
+        drafts_recipients[current_draft] = working_text
+    } else if (menu_selection == 3) {
+    	
+    }
 }
 input.onButtonPressed(Button.AB, function () {
     basic.pause(100)
@@ -138,6 +172,7 @@ let Text_input = 0
 let menu_place = 0
 let AB = 0
 let _break = 0
+let current_draft = 0
 let text_entered = 0
 let working_text = ""
 let b = 0
