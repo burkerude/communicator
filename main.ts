@@ -7,7 +7,7 @@ input.onButtonPressed(Button.A, function () {
     a = 1
 })
 function Home () {
-    current_menu = ["MESSAGES", "SETTINGS", "ABOUT"]
+    current_menu = ["MESSAGES", "SETTINGS"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -16,8 +16,8 @@ function Home () {
         messages()
     } else if (menu_selection == 1) {
         settings()
-    } else {
-        basic.showString("micrOS is a lightweight operating system for the microbit made by Burke Rudelsheim.")
+    } else if (menu_selection == 2) {
+    	
     }
 }
 function settings () {
@@ -60,7 +60,7 @@ function Drafts () {
         basic.pause(25)
     }
     current_draft = menu_selection
-    current_menu = ["read", "write", "to:", "send"]
+    current_menu = ["read", "write", "to:", "send", "^"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -86,6 +86,8 @@ function Drafts () {
         text_entered = 0
         drafts_recipients[current_draft] = working_text
     } else if (menu_selection == 3) {
+    	
+    } else if (menu_selection == 4) {
     	
     }
 }
