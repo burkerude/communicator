@@ -1,10 +1,3 @@
-function confirm () {
-    led.setBrightness(255)
-    basic.pause(10)
-    led.setBrightness(80)
-    basic.pause(10)
-    led.setBrightness(255)
-}
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS", "ABOUT"]
     Menu()
@@ -19,16 +12,8 @@ function Home () {
         basic.showString("micrOS is a lightweight operating system for the microbit made by Burke Rudelsheim.")
     }
 }
-function type_preview () {
-    basic.pause(10)
-    basic.showString("" + (current_string_type))
-}
 function settings () {
-    current_menu = ["SCREEN BRIGHTNESS"]
-    Menu()
-}
-function messages () {
-    current_menu = ["MESSAGES", "DRAFTS", "SETTINGS"]
+    current_menu = ["SCREEN BRIGHTNESS", "CHANNEL", "USERNAME"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -41,24 +26,38 @@ function messages () {
     	
     }
 }
+function Drafts () {
+	
+}
+function messages () {
+    current_menu = ["MESSAGES", "DRAFTS", "SETTINGS"]
+    Menu()
+    while (menu_selection == 100) {
+        basic.pause(25)
+    }
+    if (menu_selection == 0) {
+    	
+    } else if (menu_selection == 1) {
+        Drafts()
+    } else if (menu_selection == 2) {
+    	
+    }
+}
 function _type () {
     for (let value of alphabet) {
-        basic.showString("" + (value))
+        if (input.buttonIsPressed(Button.AB)) {
+            basic.pause(350)
+            basic.showString(current_stringtype)
+        }
+        basic.showString(value)
         while (!(input.buttonIsPressed(Button.B))) {
             if (input.buttonIsPressed(Button.A)) {
-                working_string_type = "" + current_string_type + value
-                current_string_type = current_string_type
-                confirm()
-            } else if (input.buttonIsPressed(Button.AB)) {
-                _break = 1
-                type_preview()
-            } else if (_break == 1) {
-                break;
+                if (value == "^") {
+                    break;
+                }
+                current_stringtype = "" + current_stringtype + value
+                _type()
             }
-        }
-        if (_break == 1) {
-            _break = 0
-            break;
         }
     }
 }
@@ -84,10 +83,9 @@ function Menu () {
         }
     }
 }
-let menu_place = 0
-let working_string_type = ""
 let _break = 0
-let current_string_type = 0
+let menu_place = 0
+let current_stringtype = ""
 let menu_selection = 0
 let current_menu: string[] = []
 let alphabet: string[] = []
@@ -110,8 +108,6 @@ basic.forever(function () {
                     Home()
                 }
             }
-        } else {
-        	
         }
     }
 })
