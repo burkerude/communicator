@@ -60,11 +60,6 @@ function messages () {
 function _type () {
     current_stringtype = ""
     for (let value of alphabet) {
-        if (input.buttonIsPressed(Button.AB)) {
-            basic.pause(350)
-            basic.showString(current_stringtype)
-            finishtype = 1
-        }
         basic.showString(value)
         while (!(input.buttonIsPressed(Button.B))) {
             if (input.buttonIsPressed(Button.A)) {
@@ -73,6 +68,11 @@ function _type () {
                 }
                 current_stringtype = "" + current_stringtype + value
                 _type()
+            }
+            if (input.buttonIsPressed(Button.AB)) {
+                basic.pause(350)
+                basic.showString(current_stringtype)
+                finishtype = 1
             }
         }
     }
