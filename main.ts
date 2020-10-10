@@ -142,7 +142,29 @@ input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
 radio.onReceivedString(function (receivedString) {
-	
+    let uids_messages: string[] = []
+    let current_message: string[] = []
+    incoming_message = receivedString
+    for (let index = 0; index <= 3; index++) {
+        current_message.push(incoming_message.split("-")[index])
+    }
+    for (let value of uids_messages) {
+        if (value == current_message[3]) {
+            uid_match = true
+            break;
+        }
+    }
+    if (uid_match == false) {
+        uids_messages.push(current_message[3])
+    } else {
+        if (current_message[1] == username) {
+            let inbox: string[] = []
+            inbox.push("" + current_message[2] + "-" + current_message[0])
+            basic.showString("" + (inbox))
+        } else {
+            radio.sendString(incoming_message)
+        }
+    }
 })
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
@@ -157,25 +179,7 @@ function messages () {
     }
 }
 input.onButtonPressed(Button.B, function () {
-    let uids_messages: string[] = []
-    let current_message: string[] = []
-    incoming_message = "sender" + "-" + "recipient" + "-" + "this_is_a_test" + "-" + "uid"
-    for (let index = 0; index <= 3; index++) {
-        current_message.push(incoming_message.split("-")[index])
-    }
-    for (let value of uids_messages) {
-        if (value == current_message[3]) {
-            uid_match = true
-            break;
-        }
-    }
-    if (uid_match == false) {
-        uids_messages.push(current_message[3])
-    } else {
-        if (current_message[1] == username) {
-        	
-        }
-    }
+    b = 1
 })
 function Menu () {
     let menu = 0
