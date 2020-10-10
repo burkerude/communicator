@@ -13,7 +13,7 @@ function Home () {
     }
 }
 function settings () {
-    current_menu = ["SCREEN BRIGHTNESS", "CHANNEL", "USERNAME"]
+    current_menu = ["SCREEN BRIGHTNESS", "CHANNEL", "USERNAME", "^"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -23,7 +23,21 @@ function settings () {
     } else if (menu_selection == 1) {
     	
     } else if (menu_selection == 2) {
-    	
+        basic.showString(username)
+        while (!(input.buttonIsPressed(Button.A))) {
+            if (input.buttonIsPressed(Button.B)) {
+                settings()
+            }
+        }
+        _type()
+        while (finishtype == 0) {
+        	
+        }
+        username = current_stringtype
+        finishtype = 0
+        settings()
+    } else if (menu_selection == 3) {
+        messages()
     }
 }
 function Drafts () {
@@ -40,14 +54,16 @@ function messages () {
     } else if (menu_selection == 1) {
         Drafts()
     } else if (menu_selection == 2) {
-    	
+        settings()
     }
 }
 function _type () {
+    current_stringtype = ""
     for (let value of alphabet) {
         if (input.buttonIsPressed(Button.AB)) {
             basic.pause(350)
             basic.showString(current_stringtype)
+            finishtype = 1
         }
         basic.showString(value)
         while (!(input.buttonIsPressed(Button.B))) {
@@ -86,12 +102,15 @@ function Menu () {
 let _break = 0
 let menu_place = 0
 let current_stringtype = ""
+let finishtype = 0
 let menu_selection = 0
 let current_menu: string[] = []
 let alphabet: string[] = []
+let username = ""
+username = "burkerude"
 let page = 1
 alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_", "^"]
-_type()
+Home()
 basic.forever(function () {
     if (input.buttonIsPressed(Button.AB)) {
         basic.pause(100)
