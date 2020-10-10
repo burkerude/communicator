@@ -110,7 +110,7 @@ function messages () {
         basic.pause(25)
     }
     if (menu_selection == 0) {
-    	
+        Drafts()
     } else if (menu_selection == 1) {
         Drafts()
     }
