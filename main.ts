@@ -1,3 +1,39 @@
+function check () {
+    load_speed = 25
+    led.plot(0, 0)
+    basic.pause(load_speed)
+    led.plot(1, 0)
+    basic.pause(load_speed)
+    led.plot(2, 0)
+    basic.pause(load_speed)
+    led.plot(3, 0)
+    basic.pause(load_speed)
+    led.plot(4, 0)
+    basic.pause(load_speed)
+    led.plot(4, 1)
+    basic.pause(load_speed)
+    led.plot(4, 2)
+    basic.pause(load_speed)
+    led.plot(4, 3)
+    basic.pause(load_speed)
+    led.plot(4, 4)
+    basic.pause(load_speed)
+    led.plot(3, 4)
+    basic.pause(load_speed)
+    led.plot(2, 4)
+    basic.pause(load_speed)
+    led.plot(1, 4)
+    basic.pause(load_speed)
+    led.plot(0, 4)
+    basic.pause(load_speed)
+    led.plot(0, 3)
+    basic.pause(load_speed)
+    led.plot(0, 2)
+    basic.pause(load_speed)
+    led.plot(0, 1)
+    basic.pause(200)
+    basic.clearScreen()
+}
 function button_reset () {
     a = 0
     b = 0
@@ -54,13 +90,14 @@ function settings () {
 }
 function Drafts () {
     let drafts_content: string[] = []
+    current_draft = 0
     current_menu = ["0", "1", "2", "3", "4"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
     }
     current_draft = menu_selection
-    current_menu = ["read", "write", "to:", "send", "^"]
+    current_menu = ["READ", "WRITE", "TO:", "SEND", "^"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -76,6 +113,8 @@ function Drafts () {
         }
         text_entered = 0
         drafts_content[current_draft] = working_text
+        check()
+        Drafts()
     } else if (menu_selection == 2) {
         let drafts_recipients: string[] = []
         working_text = ""
@@ -95,7 +134,7 @@ input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
 function messages () {
-    current_menu = ["MESSAGES", "DRAFTS"]
+    current_menu = ["INBOX", "DRAFTS"]
     Menu()
     while (menu_selection == 100) {
         basic.pause(25)
@@ -166,6 +205,8 @@ let current_menu: string[] = []
 let AB = 0
 let b = 0
 let a = 0
+let load_speed = 0
 let username = ""
 username = "burkerude"
+check()
 Home()
