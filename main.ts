@@ -1,5 +1,6 @@
 enum RadioMessage {
-    message1 = 49434
+    message1 = 49434,
+    Ping = 61148
 }
 function check () {
     load_speed = 25
@@ -37,26 +38,28 @@ function check () {
     basic.pause(200)
     basic.clearScreen()
 }
+function ping () {
+    for (let index = 0; index <= 255; index++) {
+        nearby = []
+        radio.setGroup(index)
+        radio.sendMessage(RadioMessage.Ping)
+        radio_in = ""
+        working_group = index
+        for (let index2 = 0; index2 < 20; index2++) {
+            basic.pause(10)
+            if (!(radio_in == "")) {
+                nearby[working_group] = radio_in
+            }
+        }
+    }
+}
 function button_reset () {
     a = 0
     b = 0
     AB = 0
 }
 function send_message (message: string, recipient: string) {
-    radio_in = ""
-    working_group = randint(1, 255)
-    radio.sendValue(recipient, working_group)
-    radio.setGroup(working_group)
-    loading = true
-    for (let index = 0; index <= 9; index++) {
-        if (radio_in == recipient) {
-            radio.sendString(message)
-            loading = false
-        } else if (index == 9) {
-            break;
-        }
-        basic.pause(100)
-    }
+	
 }
 input.onButtonPressed(Button.A, function () {
     send_message("abc", "burkerude")
@@ -76,6 +79,13 @@ function Home () {
     	
     }
 }
+radio.onReceivedMessage(RadioMessage.Ping, function () {
+    let current_group = 0
+    let home_group = 0
+    if (home_group == current_group) {
+        radio.sendString("" + (username))
+    }
+})
 function settings () {
     current_menu = ["null", "null2", "USERNAME", "^"]
     Menu()
@@ -87,7 +97,7 @@ function settings () {
     } else if (menu_selection == 1) {
     	
     } else if (menu_selection == 2) {
-        basic.showString(username)
+        basic.showString("" + (username))
         while (true) {
             if (a == 1) {
                 working_text = ""
@@ -172,9 +182,6 @@ function messages () {
 input.onButtonPressed(Button.B, function () {
     b = 1
 })
-radio.onReceivedValue(function (name, value) {
-	
-})
 function Menu () {
     let menu = 0
     menu_selection = 100
@@ -216,7 +223,7 @@ function text_input () {
         } else {
             working_text = "" + working_text + alphabet.charAt(visable_charactor)
             basic.clearScreen()
-            basic.showString(working_text)
+            basic.showString("" + (working_text))
         }
     }
 }
@@ -229,12 +236,12 @@ let text_entered = 0
 let working_text = ""
 let menu_selection = 0
 let current_menu: string[] = []
-let loading = false
-let working_group = 0
-let radio_in = ""
 let AB = 0
 let b = 0
 let a = 0
+let working_group = 0
+let radio_in = ""
+let nearby: string[] = []
 let load_speed = 0
 let username = ""
 username = "burkerude"
