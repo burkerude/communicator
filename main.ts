@@ -52,6 +52,9 @@ function ping () {
             }
         }
     }
+    for (let value of nearby) {
+        basic.showString("" + (value))
+    }
 }
 function button_reset () {
     a = 0
@@ -62,7 +65,7 @@ function send_message (message: string, recipient: string) {
 	
 }
 input.onButtonPressed(Button.A, function () {
-    a = 1
+    ping()
 })
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS"]
@@ -165,6 +168,7 @@ input.onButtonPressed(Button.AB, function () {
 })
 radio.onReceivedString(function (receivedString) {
     radio_in = receivedString
+    basic.showString(receivedString)
 })
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
@@ -244,5 +248,3 @@ let nearby: string[] = []
 let load_speed = 0
 let username = ""
 username = "burkerude"
-check()
-Home()
