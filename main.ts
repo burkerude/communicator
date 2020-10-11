@@ -62,8 +62,7 @@ function send_message (message: string, recipient: string) {
 	
 }
 input.onButtonPressed(Button.A, function () {
-    send_message("abc", "burkerude")
-    button_reset()
+    a = 1
 })
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS"]
@@ -246,3 +245,4 @@ let load_speed = 0
 let username = ""
 username = "burkerude"
 check()
+Home()
