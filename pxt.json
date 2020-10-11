@@ -1,5 +1,5 @@
 {
-    "name": "communicator",
+    "name": "micrOS",
     "description": "",
     "dependencies": {
         "core": "*",

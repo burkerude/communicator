@@ -38,34 +38,13 @@ function check () {
     basic.pause(200)
     basic.clearScreen()
 }
-function ping () {
-    for (let index = 0; index <= 255; index++) {
-        nearby = []
-        radio.setGroup(index)
-        radio.sendMessage(RadioMessage.Ping)
-        radio_in = ""
-        working_group = index
-        for (let index2 = 0; index2 < 20; index2++) {
-            basic.pause(10)
-            if (!(radio_in == "")) {
-                nearby[working_group] = radio_in
-            }
-        }
-    }
-    for (let value of nearby) {
-        basic.showString("" + (value))
-    }
-}
 function button_reset () {
     a = 0
     b = 0
     AB = 0
 }
-function send_message (message: string, recipient: string) {
-	
-}
 input.onButtonPressed(Button.A, function () {
-    ping()
+    a = 1
 })
 function Home () {
     current_menu = ["MESSAGES", "SETTINGS"]
@@ -81,13 +60,6 @@ function Home () {
     	
     }
 }
-radio.onReceivedMessage(RadioMessage.Ping, function () {
-    let current_group = 0
-    let home_group = 0
-    if (home_group == current_group) {
-        radio.sendString("" + (username))
-    }
-})
 function settings () {
     current_menu = ["null", "null2", "USERNAME", "^"]
     Menu()
@@ -166,10 +138,6 @@ function Drafts () {
 input.onButtonPressed(Button.AB, function () {
     AB = 1
 })
-radio.onReceivedString(function (receivedString) {
-    radio_in = receivedString
-    basic.showString(receivedString)
-})
 function messages () {
     current_menu = ["INBOX", "DRAFTS"]
     Menu()
@@ -242,9 +210,6 @@ let current_menu: string[] = []
 let AB = 0
 let b = 0
 let a = 0
-let working_group = 0
-let radio_in = ""
-let nearby: string[] = []
 let load_speed = 0
 let username = ""
 username = "burkerude"
